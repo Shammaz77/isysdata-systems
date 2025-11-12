@@ -469,6 +469,9 @@ body::-webkit-scrollbar-thumb {
     margin-right: auto;
     margin-left: auto;
   }
+  .section-middle{
+    margin-top: 60px;
+  }
 }
 @media (min-width: 992px) {
   .container.custom-container {
@@ -494,6 +497,30 @@ body::-webkit-scrollbar-thumb {
     max-width: inherit;
   }
 }
+  /* Animation for smooth 360-degree rotation */
+        @keyframes rotate360 {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .hero-img-wrap {
+            display: inline-block;
+        }
+
+        .hero-img-wrap img {
+            /* Apply the rotation animation */
+            animation: rotate360 20s linear infinite;
+            /* Adjust duration: smaller number = faster rotation */
+        }
+
+        /* Optional: Pause rotation on hover */
+        /* .hero-img-wrap img:hover {
+            animation-play-state: paused;
+        } */
 .section-title .sub-title {
   font-family: var(--ff-inter);
   font-size: 18px;
