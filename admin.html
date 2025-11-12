@@ -7,173 +7,543 @@
   <title>Admin Panel - Services & Careers</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="stylesheet" href="assets/css/admin.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f8f9fa;
+    }
+
+    /* ===== LOGIN PAGE ===== */
+    .login-page {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+
+    .login-container {
+      width: 100%;
+      max-width: 420px;
+      padding: 40px;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    }
+
+    .login-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .login-logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .login-logo i {
+      font-size: 3rem;
+      color: #667eea;
+    }
+
+    .login-title {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #333;
+      margin: 0;
+    }
+
+    .login-subtitle {
+      color: #999;
+      font-size: 0.9rem;
+      margin-top: 8px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      font-weight: 500;
+      color: #333;
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 12px 15px;
+      border: 1.5px solid #e0e0e0;
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .form-group input:focus {
+      outline: none;
+      border-color: #667eea;
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+
+    .login-btn {
+      width: 100%;
+      padding: 12px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: 20px;
+    }
+
+    .login-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+    }
+
+    .login-btn:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+
+    .error-message {
+      color: #dc3545;
+      font-size: 0.9rem;
+      margin-top: 10px;
+      padding: 10px;
+      background: #f8d7da;
+      border-radius: 6px;
+      display: none;
+      border: 1px solid #f5c6cb;
+    }
+
+    /* ===== DASHBOARD PAGE ===== */
+    .dashboard-page {
+      display: none;
+      flex: 1;
+      min-height: 100vh;
+    }
+
+    .dashboard-wrapper {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      width: 250px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 30px 20px;
+      position: fixed;
+      height: 100vh;
+      overflow-y: auto;
+      left: 0;
+      top: 0;
+    }
+
+    .logo {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 40px;
+      padding-bottom: 30px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .logo i {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+    }
+
+    .logo p {
+      font-size: 1.1rem;
+      font-weight: bold;
+      margin: 0;
+    }
+
+    .nav {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .nav-link {
+      color: rgba(255, 255, 255, 0.8);
+      text-decoration: none;
+      padding: 12px 15px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .nav-link:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+    }
+
+    .nav-link.active {
+      background: rgba(255, 255, 255, 0.25);
+      color: white;
+      font-weight: 600;
+    }
+
+    .nav-link i {
+      width: 20px;
+      text-align: center;
+    }
+
+    .main-content {
+      margin-left: 250px;
+      padding: 30px;
+      flex: 1;
+      background: #f8f9fa;
+    }
+
+    .section {
+      display: none;
+    }
+
+    .section.active {
+      display: block;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .section h1 {
+      color: #333;
+      margin-bottom: 30px;
+      font-weight: 700;
+    }
+
+    .stat-card {
+      background: white;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      margin-bottom: 20px;
+      transition: all 0.3s ease;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .stat-value {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #667eea;
+      margin-bottom: 10px;
+    }
+
+    .stat-label {
+      color: #999;
+      font-weight: 500;
+    }
+
+    .card {
+      border: none;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+    }
+
+    .table {
+      color: #333;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border: none;
+    }
+
+    .btn-primary:hover {
+      background: linear-gradient(135deg, #5568d3 0%, #6a3e94 100%);
+    }
+
+    .loading {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 40px;
+    }
+
+    .spinner-border {
+      color: #667eea;
+    }
+
+    .alert {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 9999;
+      min-width: 300px;
+    }
+
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .logout-btn {
+      background: #dc3545;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.3s ease;
+    }
+
+    .logout-btn:hover {
+      background: #c82333;
+    }
+
+    @media (max-width: 768px) {
+      .sidebar {
+        width: 200px;
+        padding: 20px 15px;
+      }
+
+      .main-content {
+        margin-left: 200px;
+        padding: 20px;
+      }
+
+      .login-container {
+        margin: 20px;
+      }
+    }
+  </style>
 </head>
 
 <body>
-  <!-- Sidebar -->
-  <div class="sidebar">
-    <div class="logo">
-      <span><i class="fas fa-layer-group" style="font-size: 2.5rem;"></i></span>
-      <p style="margin-top: 10px; font-size: 1.1rem; font-weight: bold;">Admin Panel</p>
+
+  <!-- ===== LOGIN PAGE ===== -->
+  <div class="login-page" id="loginPage">
+    <div class="login-container">
+      <div class="login-header">
+        <div class="login-logo">
+          <i class="fas fa-layer-group"></i>
+        </div>
+        <h1 class="login-title">Admin Panel</h1>
+        <p class="login-subtitle">Services & Careers Management</p>
+      </div>
+
+      <form id="loginForm" onsubmit="handleLogin(event)">
+        <div class="form-group">
+          <label for="loginEmail">Email Address</label>
+          <input type="email" id="loginEmail" placeholder="admin@example.com" required>
+        </div>
+
+        <div class="form-group">
+          <label for="loginPassword">Password</label>
+          <input type="password" id="loginPassword" placeholder="Enter your password" required>
+        </div>
+
+        <button type="submit" class="login-btn" id="loginBtn">
+          Sign In
+        </button>
+
+        <div class="error-message" id="errorMessage"></div>
+      </form>
     </div>
-    <nav class="nav flex-column">
-      <a href="#" class="nav-link active" onclick="showSection('dashboard', event)">
-        <i class="fas fa-chart-line"></i> <span>Dashboard</span>
-      </a>
-      <a href="#" class="nav-link" onclick="showSection('services', event)">
-        <i class="fas fa-cog"></i> <span>Services</span>
-      </a>
-      <a href="#" class="nav-link" onclick="showSection('careers', event)">
-        <i class="fas fa-briefcase"></i> <span>Careers</span>
-      </a>
-      <a href="#" class="nav-link" onclick="showSection('applications', event)">
-        <i class="fas fa-file-alt"></i> <span>Applications</span>
-      </a>
-    </nav>
   </div>
 
-  <!-- Main Content -->
-  <div class="main-content">
-    <!-- Dashboard Section -->
-    <div id="dashboard" class="section active">
-      <h1>Dashboard</h1>
-      <div class="row">
-        <div class="col-md-6 col-lg-3">
-          <div class="stat-card services">
-            <div class="stat-value" id="totalServices">0</div>
-            <div class="stat-label">Total Services</div>
-          </div>
+  <!-- ===== DASHBOARD PAGE ===== -->
+  <div class="dashboard-page" id="dashboardPage">
+    <div class="dashboard-wrapper">
+      <!-- Sidebar -->
+      <div class="sidebar">
+        <div class="logo">
+          <i class="fas fa-layer-group"></i>
+          <p>Admin Panel</p>
         </div>
-        <div class="col-md-6 col-lg-3">
-          <div class="stat-card careers">
-            <div class="stat-value" id="totalCareers">0</div>
-            <div class="stat-label">Active Career Posts</div>
-          </div>
-        </div>
-        <div class="col-md-6 col-lg-3">
-          <div class="stat-card applications">
-            <div class="stat-value" id="totalApplications">0</div>
-            <div class="stat-label">Total Applications</div>
-          </div>
-        </div>
-        <div class="col-md-6 col-lg-3">
-          <div class="stat-card applications">
-            <div class="stat-value" id="pendingApplications">0</div>
-            <div class="stat-label">Pending Review</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Services Section -->
-    <div id="services" class="section">
-      <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1>Manage Services</h1>
-        <button class="btn btn-primary" onclick="openServiceModal()">
-          <i class="fas fa-plus"></i> Add Service
-        </button>
+        <nav class="nav">
+          <a class="nav-link active" onclick="showSection('dashboard', event)">
+            <i class="fas fa-chart-line"></i> <span>Dashboard</span>
+          </a>
+          <a class="nav-link" onclick="showSection('services', event)">
+            <i class="fas fa-cog"></i> <span>Services</span>
+          </a>
+          <a class="nav-link" onclick="showSection('careers', event)">
+            <i class="fas fa-briefcase"></i> <span>Careers</span>
+          </a>
+          <a class="nav-link" onclick="showSection('applications', event)">
+            <i class="fas fa-file-alt"></i> <span>Applications</span>
+          </a>
+          <a class="nav-link text-danger" onclick="handleLogout(event)" style="margin-top: 20px;">
+            <i class="fas fa-sign-out-alt"></i> <span>Logout</span>
+          </a>
+        </nav>
       </div>
 
-      <div class="card">
-        <div class="card-body">
-          <div class="mb-3">
-            <input type="text" class="form-control" placeholder="Search services..." id="searchServices"
-              onkeyup="filterServices()">
-          </div>
-          <div class="table-responsive">
-            <div id="servicesLoading" class="loading">
-              <div class="spinner-border" role="status">
-                <span class="visually-hidden">Loading...</span>
+      <!-- Main Content -->
+      <div class="main-content">
+        <div class="top-bar">
+          <h2 style="margin: 0; color: #333;">Welcome back!</h2>
+        </div>
+
+        <!-- Dashboard Section -->
+        <div id="dashboard" class="section active">
+          <h1>Dashboard</h1>
+          <div class="row">
+            <div class="col-md-6 col-lg-3">
+              <div class="stat-card">
+                <div class="stat-value" id="totalServices">0</div>
+                <div class="stat-label">Total Services</div>
               </div>
             </div>
-            <table class="table table-hover" id="servicesTableContainer" style="display: none;">
-              <thead class="table-light">
-                <tr>
-                  <th>Title</th>
-                  <th>Description</th>
-                  <th>Status</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody id="servicesTable">
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Careers Section -->
-    <div id="careers" class="section">
-      <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1>Manage Career Posts</h1>
-        <button class="btn btn-primary" onclick="openCareerModal()">
-          <i class="fas fa-plus"></i> Add Position
-        </button>
-      </div>
-
-      <div class="card">
-        <div class="card-body">
-          <div class="mb-3">
-            <input type="text" class="form-control" placeholder="Search positions..." id="searchCareers"
-              onkeyup="filterCareers()">
-          </div>
-          <div class="table-responsive">
-            <div id="careersLoading" class="loading" style="display: none;">
-              <div class="spinner-border" role="status">
-                <span class="visually-hidden">Loading...</span>
+            <div class="col-md-6 col-lg-3">
+              <div class="stat-card">
+                <div class="stat-value" id="totalCareers">0</div>
+                <div class="stat-label">Active Career Posts</div>
               </div>
             </div>
-            <table class="table table-hover" id="careersTableContainer">
-              <thead class="table-light">
-                <tr>
-                  <th>Post Name</th>
-                  <th>Employment Type</th>
-                  <th>Description</th>
-                  <th>Posted Date</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody id="careersTable">
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Applications Section -->
-    <div id="applications" class="section">
-      <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1>Job Applications</h1>
-      </div>
-
-      <div class="card">
-        <div class="card-body">
-          <div class="mb-3">
-            <input type="text" class="form-control" placeholder="Search applications..." id="searchApplications"
-              onkeyup="filterApplications()">
-          </div>
-          <div class="table-responsive">
-            <div id="applicationsLoading" class="loading" style="display: none;">
-              <div class="spinner-border" role="status">
-                <span class="visually-hidden">Loading...</span>
+            <div class="col-md-6 col-lg-3">
+              <div class="stat-card">
+                <div class="stat-value" id="totalApplications">0</div>
+                <div class="stat-label">Total Applications</div>
               </div>
             </div>
-            <table class="table table-hover" id="applicationsTableContainer">
-              <thead class="table-light">
-                <tr>
-                  <th>Name</th>
-                  <th>Email</th>
-                  <th>Position</th>
-                  <th>Status</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody id="applicationsTable">
-              </tbody>
-            </table>
+            <div class="col-md-6 col-lg-3">
+              <div class="stat-card">
+                <div class="stat-value" id="pendingApplications">0</div>
+                <div class="stat-label">Pending Review</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Services Section -->
+        <div id="services" class="section">
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1>Manage Services</h1>
+            <button class="btn btn-primary" onclick="openServiceModal()">
+              <i class="fas fa-plus"></i> Add Service
+            </button>
+          </div>
+
+          <div class="card">
+            <div class="card-body">
+              <div class="mb-3">
+                <input type="text" class="form-control" placeholder="Search services..." id="searchServices" onkeyup="filterServices()">
+              </div>
+              <div class="table-responsive">
+                <div id="servicesLoading" class="loading" style="display: none;">
+                  <div class="spinner-border" role="status"></div>
+                </div>
+                <table class="table table-hover" id="servicesTableContainer" style="display: none;">
+                  <thead class="table-light">
+                    <tr>
+                      <th>Title</th>
+                      <th>Description</th>
+                      <th>Status</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="servicesTable"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Careers Section -->
+        <div id="careers" class="section">
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1>Manage Career Posts</h1>
+            <button class="btn btn-primary" onclick="openCareerModal()">
+              <i class="fas fa-plus"></i> Add Position
+            </button>
+          </div>
+
+          <div class="card">
+            <div class="card-body">
+              <div class="mb-3">
+                <input type="text" class="form-control" placeholder="Search positions..." id="searchCareers" onkeyup="filterCareers()">
+              </div>
+              <div class="table-responsive">
+                <div id="careersLoading" class="loading" style="display: none;">
+                  <div class="spinner-border" role="status"></div>
+                </div>
+                <table class="table table-hover" id="careersTableContainer" style="display: none;">
+                  <thead class="table-light">
+                    <tr>
+                      <th>Post Name</th>
+                      <th>Employment Type</th>
+                      <th>Description</th>
+                      <th>Posted Date</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="careersTable"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Applications Section -->
+        <div id="applications" class="section">
+          <h1>Job Applications</h1>
+          <div class="card">
+            <div class="card-body">
+              <div class="mb-3">
+                <input type="text" class="form-control" placeholder="Search applications..." id="searchApplications" onkeyup="filterApplications()">
+              </div>
+              <div class="table-responsive">
+                <div id="applicationsLoading" class="loading" style="display: none;">
+                  <div class="spinner-border" role="status"></div>
+                </div>
+                <table class="table table-hover" id="applicationsTableContainer" style="display: none;">
+                  <thead class="table-light">
+                    <tr>
+                      <th>Name</th>
+                      <th>Email</th>
+                      <th>Position</th>
+                      <th>Status</th>
+                      <th style="width: 150px;">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="applicationsTable"></tbody>
+                </table>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -188,7 +558,7 @@
           <h5 class="modal-title" id="serviceModalTitle">Add New Service</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
-        <form id="serviceForm">
+        <form id="serviceForm" onsubmit="saveService(event)">
           <div class="modal-body">
             <div class="mb-3">
               <label class="form-label">Service Title *</label>
@@ -223,7 +593,7 @@
           <h5 class="modal-title" id="careerModalTitle">Add New Position</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
-        <form id="careerForm">
+        <form id="careerForm" onsubmit="saveCareer(event)">
           <div class="modal-body">
             <div class="mb-3">
               <label class="form-label">Post Name *</label>
@@ -251,25 +621,25 @@
     </div>
   </div>
 
-  <!-- Alert Container -->
-  <div id="alertContainer" style="position: fixed; top: 20px; right: 20px; z-index: 9999;"></div>
-
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
     import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
-    
-const firebaseConfig = {
-  apiKey: "AIzaSeNf7UGF_G3opr2jdNt31TWs8",
-  authDomain: "isysdata-systems.firebaseapp.com",
-  projectId: "isysdata-systems",
-  storageBucket: "isysdata-systems.firebasestorage.app",
-  messagingSenderId: "25915958127",
-  appId: "1:25915958127:web:c136595bf710f05a7e9a",
-  measurementId: "G-SMYY5GYC8T"
-};
+    import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyC5OAoXeNf7UGF_G3opr2jdNt31T4zPWs8",
+      authDomain: "isysdata-systems.firebaseapp.com",
+      projectId: "isysdata-systems",
+      storageBucket: "isysdata-systems.firebasestorage.app",
+      messagingSenderId: "25915958127",
+      appId: "1:25915958127:web:c136a3595bf710f05a7e9a",
+      measurementId: "G-SMYY5GYC8T"
+    };
+
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
+    const auth = getAuth(app);
 
     let editingId = null;
     let editingType = null;
@@ -277,49 +647,111 @@ const firebaseConfig = {
     let allCareers = [];
     let allApplications = [];
 
+    // Check auth state on page load
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        document.getElementById("loginPage").style.display = "none";
+        document.getElementById("dashboardPage").style.display = "block";
+        loadStats();
+      } else {
+        document.getElementById("loginPage").style.display = "flex";
+        document.getElementById("dashboardPage").style.display = "none";
+      }
+    });
+
+    // ===== LOGIN & AUTHENTICATION =====
+    window.handleLogin = async function (event) {
+      event.preventDefault();
+      const email = document.getElementById("loginEmail").value;
+      const password = document.getElementById("loginPassword").value;
+      const btn = document.getElementById("loginBtn");
+      const errorMsg = document.getElementById("errorMessage");
+
+      if (!email || !password) {
+        showError("Please fill in all fields");
+        return;
+      }
+
+      try {
+        btn.disabled = true;
+        btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Signing in...';
+        errorMsg.style.display = "none";
+
+        await signInWithEmailAndPassword(auth, email, password);
+        
+        document.getElementById("loginPage").style.display = "none";
+        document.getElementById("dashboardPage").style.display = "block";
+        
+        await loadStats();
+      } catch (error) {
+        showError(error.message || "Login failed");
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = "Sign In";
+      }
+    };
+
+    window.handleLogout = async function (event) {
+      event.preventDefault();
+      if (confirm("Are you sure you want to log out?")) {
+        try {
+          await signOut(auth);
+          document.getElementById("loginPage").style.display = "flex";
+          document.getElementById("dashboardPage").style.display = "none";
+          document.getElementById("loginForm").reset();
+          document.getElementById("errorMessage").style.display = "none";
+          allServices = [];
+          allCareers = [];
+          allApplications = [];
+        } catch (error) {
+          alert("Logout failed: " + error.message);
+        }
+      }
+    };
+
+    function showError(message) {
+      const errorMsg = document.getElementById("errorMessage");
+      errorMsg.textContent = message;
+      errorMsg.style.display = "block";
+    }
+
     // ===== SERVICES FUNCTIONS =====
-    async function loadServices() {
+    window.loadServices = async function () {
       const loading = document.getElementById("servicesLoading");
       const table = document.getElementById("servicesTableContainer");
-      
       try {
         loading.style.display = "flex";
         table.style.display = "none";
-        
         const querySnapshot = await getDocs(collection(db, "services"));
         allServices = [];
         querySnapshot.forEach((doc) => {
           allServices.push({ id: doc.id, ...doc.data() });
         });
-        
         displayServices(allServices);
-        updateStats();
-        
         loading.style.display = "none";
         table.style.display = "table";
       } catch (error) {
         console.error("Error loading services:", error);
-        showAlert("Error loading services: " + error.message, "danger");
         loading.style.display = "none";
       }
-    }
+    };
 
     function displayServices(servicesToDisplay) {
       const tbody = document.getElementById("servicesTable");
       tbody.innerHTML = servicesToDisplay.map(s => `
         <tr>
           <td><strong>${s.title || ''}</strong></td>
-          <td>${s.description || ''}</td>
+          <td>${(s.description || '').substring(0, 50)}</td>
           <td><span class="badge bg-success">${s.status || 'Active'}</span></td>
           <td>
-            <button class="btn btn-sm btn-warning" onclick="editServiceRecord('${s.id}')">Edit</button>
-            <button class="btn btn-sm btn-danger" onclick="deleteServiceRecord('${s.id}')">Delete</button>
+            <button class="btn btn-sm btn-warning" onclick="editService('${s.id}')">Edit</button>
+            <button class="btn btn-sm btn-danger" onclick="deleteService('${s.id}')">Delete</button>
           </td>
         </tr>
       `).join("");
     }
 
-    window.editServiceRecord = async function(id) {
+    window.editService = async function (id) {
       const service = allServices.find(s => s.id === id);
       if (service) {
         editingId = id;
@@ -330,126 +762,107 @@ const firebaseConfig = {
         document.getElementById("serviceModalTitle").textContent = "Edit Service";
         new bootstrap.Modal(document.getElementById("serviceModal")).show();
       }
-    }
+    };
 
-    window.deleteServiceRecord = async function(id) {
+    window.deleteService = async function (id) {
       if (confirm("Delete this service?")) {
         try {
           await deleteDoc(doc(db, "services", id));
-          showAlert("Service deleted successfully!", "success");
-          loadServices();
+          alert("Service deleted successfully!");
+          await loadServices();
+          await loadStats();
         } catch (error) {
-          console.error("Error deleting service:", error);
-          showAlert("Error deleting service", "danger");
+          alert("Error deleting service: " + error.message);
         }
       }
-    }
+    };
 
-    function openServiceModal() {
+    window.openServiceModal = function () {
       editingId = null;
       editingType = null;
       document.getElementById("serviceForm").reset();
       document.getElementById("serviceModalTitle").textContent = "Add New Service";
       new bootstrap.Modal(document.getElementById("serviceModal")).show();
-    }
+    };
 
-    document.getElementById("serviceForm").addEventListener("submit", async function (e) {
-      e.preventDefault();
-      
+    window.saveService = async function (event) {
+      event.preventDefault();
       const title = document.getElementById("serviceTitle").value;
       const description = document.getElementById("serviceDesc").value;
       const status = document.getElementById("serviceStatus").value;
+      const submitBtn = document.getElementById("serviceSubmitBtn");
 
       try {
-        const submitBtn = document.getElementById("serviceSubmitBtn");
         submitBtn.disabled = true;
         submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Saving...';
 
         if (editingId) {
-          await updateDoc(doc(db, "services", editingId), {
-            title,
-            description,
-            status,
-            updatedAt: new Date()
-          });
-          showAlert("Service updated successfully!", "success");
+          await updateDoc(doc(db, "services", editingId), { title, description, status, updatedAt: new Date() });
+          alert("Service updated successfully!");
         } else {
-          await addDoc(collection(db, "services"), {
-            title,
-            description,
-            status,
-            createdAt: new Date()
-          });
-          showAlert("Service added successfully!", "success");
+          await addDoc(collection(db, "services"), { title, description, status, createdAt: new Date() });
+          alert("Service added successfully!");
         }
-
-        loadServices();
+        await loadServices();
+        await loadStats();
         bootstrap.Modal.getInstance(document.getElementById("serviceModal")).hide();
+      } catch (error) {
+        alert("Error saving service: " + error.message);
+      } finally {
         submitBtn.disabled = false;
         submitBtn.innerHTML = "Save Service";
-      } catch (error) {
-        console.error("Error saving service:", error);
-        showAlert("Error saving service: " + error.message, "danger");
-        document.getElementById("serviceSubmitBtn").disabled = false;
-        document.getElementById("serviceSubmitBtn").innerHTML = "Save Service";
       }
-    });
+    };
 
-    function filterServices() {
+    window.filterServices = function () {
       const search = document.getElementById("searchServices").value.toLowerCase();
-      const filtered = allServices.filter(s => 
-        (s.title && s.title.toLowerCase().includes(search)) || 
+      const filtered = allServices.filter(s =>
+        (s.title && s.title.toLowerCase().includes(search)) ||
         (s.description && s.description.toLowerCase().includes(search))
       );
       displayServices(filtered);
-    }
+    };
 
     // ===== CAREERS FUNCTIONS =====
-    async function loadCareers() {
+    window.loadCareers = async function () {
       const loading = document.getElementById("careersLoading");
       const table = document.getElementById("careersTableContainer");
-
       try {
         loading.style.display = "flex";
         table.style.display = "none";
-
         const querySnapshot = await getDocs(collection(db, "careers"));
         allCareers = [];
         querySnapshot.forEach((doc) => {
           allCareers.push({ id: doc.id, ...doc.data() });
         });
         displayCareers(allCareers);
-        updateStats();
-
         loading.style.display = "none";
         table.style.display = "table";
       } catch (error) {
         console.error("Error loading careers:", error);
-        showAlert("Error loading careers", "danger");
         loading.style.display = "none";
       }
-    }
+    };
 
     function displayCareers(careersToDisplay) {
       const tbody = document.getElementById("careersTable");
       tbody.innerHTML = careersToDisplay.map(c => {
         const postedDate = c.createdAt ? new Date(c.createdAt.toDate()).toLocaleDateString() : 'N/A';
         return `
-        <tr>
-          <td><strong>${c.postName || ''}</strong></td>
-          <td>${c.employmentType || ''}</td>
-          <td>${c.description || ''}</td>
-          <td>${postedDate}</td>
-          <td>
-            <button class="btn btn-sm btn-warning" onclick="editCareerRecord('${c.id}')">Edit</button>
-            <button class="btn btn-sm btn-danger" onclick="deleteCareerRecord('${c.id}')">Delete</button>
-          </td>
-        </tr>
-      `;
+          <tr>
+            <td><strong>${c.postName || ''}</strong></td>
+            <td>${c.employmentType || ''}</td>
+            <td>${(c.description || '').substring(0, 50)}</td>
+            <td>${postedDate}</td>
+            <td>
+              <button class="btn btn-sm btn-warning" onclick="editCareer('${c.id}')">Edit</button>
+              <button class="btn btn-sm btn-danger" onclick="deleteCareer('${c.id}')">Delete</button>
+            </td>
+          </tr>`;
       }).join("");
     }
 
-    window.editCareerRecord = async function(id) {
+    window.editCareer = async function (id) {
       const career = allCareers.find(c => c.id === id);
       if (career) {
         editingId = id;
@@ -460,147 +873,214 @@ const firebaseConfig = {
         document.getElementById("careerModalTitle").textContent = "Edit Position";
         new bootstrap.Modal(document.getElementById("careerModal")).show();
       }
-    }
+    };
 
-    window.deleteCareerRecord = async function(id) {
+    window.deleteCareer = async function (id) {
       if (confirm("Delete this position?")) {
         try {
           await deleteDoc(doc(db, "careers", id));
-          showAlert("Position deleted successfully!", "success");
-          loadCareers();
+          alert("Position deleted successfully!");
+          await loadCareers();
+          await loadStats();
         } catch (error) {
-          console.error("Error deleting career:", error);
-          showAlert("Error deleting position", "danger");
+          alert("Error deleting position: " + error.message);
         }
       }
-    }
+    };
 
-    function openCareerModal() {
+    window.openCareerModal = function () {
       editingId = null;
       editingType = null;
       document.getElementById("careerForm").reset();
       document.getElementById("careerModalTitle").textContent = "Add New Position";
       new bootstrap.Modal(document.getElementById("careerModal")).show();
-    }
+    };
 
-    document.getElementById("careerForm").addEventListener("submit", async function (e) {
-      e.preventDefault();
-      
+    window.saveCareer = async function (event) {
+      event.preventDefault();
       const postName = document.getElementById("postName").value;
       const employmentType = document.getElementById("employmentType").value;
       const description = document.getElementById("careerDesc").value;
+      const submitBtn = document.getElementById("careerSubmitBtn");
 
       try {
-        const submitBtn = document.getElementById("careerSubmitBtn");
         submitBtn.disabled = true;
         submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Saving...';
 
         if (editingId) {
-          await updateDoc(doc(db, "careers", editingId), {
-            postName,
-            employmentType,
-            description,
-            updatedAt: new Date()
-          });
-          showAlert("Position updated successfully!", "success");
+          await updateDoc(doc(db, "careers", editingId), { postName, employmentType, description, updatedAt: new Date() });
+          alert("Position updated successfully!");
         } else {
-          await addDoc(collection(db, "careers"), {
-            postName,
-            employmentType,
-            description,
-            createdAt: new Date()
-          });
-          showAlert("Position added successfully!", "success");
+          await addDoc(collection(db, "careers"), { postName, employmentType, description, createdAt: new Date() });
+          alert("Position added successfully!");
         }
-
-        loadCareers();
+        await loadCareers();
+        await loadStats();
         bootstrap.Modal.getInstance(document.getElementById("careerModal")).hide();
+      } catch (error) {
+        alert("Error saving position: " + error.message);
+      } finally {
         submitBtn.disabled = false;
         submitBtn.innerHTML = "Save Position";
-      } catch (error) {
-        console.error("Error saving career:", error);
-        showAlert("Error saving position: " + error.message, "danger");
-        document.getElementById("careerSubmitBtn").disabled = false;
-        document.getElementById("careerSubmitBtn").innerHTML = "Save Position";
       }
-    });
+    };
 
-    function filterCareers() {
+    window.filterCareers = function () {
       const search = document.getElementById("searchCareers").value.toLowerCase();
-      const filtered = allCareers.filter(c => 
-        (c.postName && c.postName.toLowerCase().includes(search)) || 
+      const filtered = allCareers.filter(c =>
+        (c.postName && c.postName.toLowerCase().includes(search)) ||
         (c.employmentType && c.employmentType.toLowerCase().includes(search))
       );
       displayCareers(filtered);
-    }
+    };
 
-    // ===== APPLICATIONS FUNCTIONS =====
-    async function loadApplications() {
+    // ===== APPLICATIONS FUNCTIONS (NO DUPLICATES) =====
+    window.loadApplications = async function () {
+      const loading = document.getElementById("applicationsLoading");
+      const table = document.getElementById("applicationsTableContainer");
       try {
+        loading.style.display = "flex";
+        table.style.display = "none";
         const querySnapshot = await getDocs(collection(db, "applications"));
         allApplications = [];
         querySnapshot.forEach((doc) => {
           allApplications.push({ id: doc.id, ...doc.data() });
         });
+        // Sort by creation date (newest first)
+        allApplications.sort((a, b) => {
+          const dateA = a.createdAt ? a.createdAt.toDate() : new Date(0);
+          const dateB = b.createdAt ? b.createdAt.toDate() : new Date(0);
+          return dateB - dateA;
+        });
         displayApplications(allApplications);
-        updateStats();
+        loading.style.display = "none";
+        table.style.display = "table";
       } catch (error) {
         console.error("Error loading applications:", error);
-        showAlert("Error loading applications", "danger");
+        loading.style.display = "none";
       }
-    }
+    };
 
     function displayApplications(applicationsToDisplay) {
       const tbody = document.getElementById("applicationsTable");
-      tbody.innerHTML = applicationsToDisplay.map(a => `
-        <tr>
-          <td><strong>${a.name || ''}</strong></td>
-          <td>${a.email || ''}</td>
-          <td>${a.position || ''}</td>
-          <td><span class="badge bg-warning">${a.status || 'Pending'}</span></td>
-          <td>
-            <button class="btn btn-sm btn-info" onclick="viewApplication('${a.id}')">View</button>
-            <button class="btn btn-sm btn-danger" onclick="deleteApplicationRecord('${a.id}')">Delete</button>
-          </td>
-        </tr>
-      `).join("");
+      tbody.innerHTML = applicationsToDisplay.map(a => {
+        const appliedDate = a.createdAt ? new Date(a.createdAt.toDate()).toLocaleDateString() : 'N/A';
+        const statusColor = a.status === 'Pending' ? 'warning' : a.status === 'Accepted' ? 'success' : 'danger';
+        
+        return `
+          <tr>
+            <td><strong>${a.name || 'N/A'}</strong></td>
+            <td>${a.email || 'N/A'}</td>
+            <td>${a.position || 'N/A'}</td>
+            <td><span class="badge bg-${statusColor}">${a.status || 'Pending'}</span></td>
+            <td>
+              <button class="btn btn-sm btn-info" onclick="viewApplicationDetails('${a.id}')">
+                <i class="fas fa-eye"></i> View
+              </button>
+              <button class="btn btn-sm btn-danger" onclick="deleteApplication('${a.id}')">
+                <i class="fas fa-trash"></i>
+              </button>
+            </td>
+          </tr>`;
+      }).join("");
     }
 
-    window.deleteApplicationRecord = async function(id) {
-      if (confirm("Delete this application?")) {
+    window.viewApplicationDetails = function (id) {
+      const app = allApplications.find(a => a.id === id);
+      if (app) {
+        const appliedDate = app.createdAt ? new Date(app.createdAt.toDate()).toLocaleString() : 'N/A';
+        const details = `
+          <div style="text-align: left;">
+            <h5 style="margin-bottom: 20px; color: #667eea;">Application Details</h5>
+            <p><strong>Position:</strong> ${app.position || 'N/A'}</p>
+            <p><strong>Full Name:</strong> ${app.name || 'N/A'}</p>
+            <p><strong>Email:</strong> ${app.email || 'N/A'}</p>
+            <p><strong>Mobile:</strong> ${app.mobile || 'N/A'}</p>
+            <p><strong>Place:</strong> ${app.place || 'N/A'}</p>
+            <p><strong>Experience:</strong> ${app.experience || 'N/A'} years</p>
+            <p><strong>Status:</strong> ${app.status || 'Pending'}</p>
+            <p><strong>Applied On:</strong> ${appliedDate}</p>
+          </div>
+        `;
+        
+        const modalHTML = `
+          <div class="modal fade" id="viewApplicationModal" tabindex="-1">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Application Details</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                  ${details}
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+        
+        const existingModal = document.getElementById('viewApplicationModal');
+        if (existingModal) {
+          existingModal.remove();
+        }
+        
+        document.body.insertAdjacentHTML('beforeend', modalHTML);
+        
+        const modal = new bootstrap.Modal(document.getElementById('viewApplicationModal'));
+        modal.show();
+        
+        document.getElementById('viewApplicationModal').addEventListener('hidden.bs.modal', function () {
+          this.remove();
+        });
+      }
+    };
+
+    window.deleteApplication = async function (id) {
+      if (confirm("Are you sure you want to delete this application?")) {
         try {
           await deleteDoc(doc(db, "applications", id));
-          showAlert("Application deleted successfully!", "success");
-          loadApplications();
+          alert("Application deleted successfully!");
+          await loadApplications();
+          await loadStats();
         } catch (error) {
-          console.error("Error deleting application:", error);
-          showAlert("Error deleting application", "danger");
+          alert("Error deleting application: " + error.message);
         }
       }
-    }
+    };
 
-    function filterApplications() {
+    window.filterApplications = function () {
       const search = document.getElementById("searchApplications").value.toLowerCase();
-      const filtered = allApplications.filter(a => 
-        (a.name && a.name.toLowerCase().includes(search)) || 
-        (a.email && a.email.toLowerCase().includes(search))
+      const filtered = allApplications.filter(a =>
+        (a.name && a.name.toLowerCase().includes(search)) ||
+        (a.email && a.email.toLowerCase().includes(search)) ||
+        (a.position && a.position.toLowerCase().includes(search)) ||
+        (a.mobile && a.mobile.toLowerCase().includes(search))
       );
       displayApplications(filtered);
-    }
+    };
 
     // ===== UTILITY FUNCTIONS =====
-    window.showSection = function(sectionName, event) {
+    window.showSection = function (sectionName, event) {
       event.preventDefault();
       document.querySelectorAll(".section").forEach(s => s.classList.remove("active"));
       document.getElementById(sectionName).classList.add("active");
-
-      document.querySelectorAll(".sidebar .nav-link").forEach(l => l.classList.remove("active"));
+      document.querySelectorAll(".nav-link").forEach(l => l.classList.remove("active"));
       event.target.closest(".nav-link").classList.add("active");
 
-      if (sectionName === "services") loadServices();
-      if (sectionName === "careers") loadCareers();
-      if (sectionName === "applications") loadApplications();
-    }
+      if (sectionName === "services") window.loadServices();
+      if (sectionName === "careers") window.loadCareers();
+      if (sectionName === "applications") window.loadApplications();
+    };
+
+    window.loadStats = async function () {
+      await window.loadServices();
+      await window.loadCareers();
+      await window.loadApplications();
+      updateStats();
+    };
 
     function updateStats() {
       document.getElementById("totalServices").textContent = allServices.length;
@@ -608,31 +1088,6 @@ const firebaseConfig = {
       document.getElementById("totalApplications").textContent = allApplications.length;
       document.getElementById("pendingApplications").textContent = allApplications.filter(a => a.status === "Pending").length;
     }
-
-    function showAlert(message, type) {
-      const alertDiv = document.createElement("div");
-      alertDiv.className = `alert alert-${type} alert-dismissible fade show`;
-      alertDiv.role = "alert";
-      alertDiv.innerHTML = `
-        ${message}
-        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-      `;
-      document.getElementById("alertContainer").appendChild(alertDiv);
-      setTimeout(() => alertDiv.remove(), 3000);
-    }
-
-    // Make functions globally available
-    window.openServiceModal = openServiceModal;
-    window.openCareerModal = openCareerModal;
-    window.filterServices = filterServices;
-    window.filterCareers = filterCareers;
-    window.filterApplications = filterApplications;
-    window.deleteCareerRecord = deleteCareerRecord;
-    window.editCareerRecord = editCareerRecord;
-    window.deleteApplicationRecord = deleteApplicationRecord;
-
-    // Initialize
-    loadServices();
   </script>
 </body>
 
