@@ -1,0 +1,99 @@
+    body {
+      background-color: #f8f9fa;
+    }
+
+    .sidebar {
+      min-height: 100vh;
+        background: linear-gradient(135deg, #3878d5 0%, #4b4ba2 100%);
+      position: fixed;
+      width: 250px;
+      left: 0;
+      top: 0;
+      padding: 20px;
+      z-index: 1000;
+    }
+
+    .sidebar .logo {
+      color: white;
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 30px;
+    }
+
+    .sidebar .nav-link {
+      color: rgba(255, 255, 255, 0.8);
+      padding: 12px 15px;
+      margin-bottom: 8px;
+      border-radius: 8px;
+      transition: all 0.3s;
+    }
+
+    .sidebar .nav-link:hover,
+    .sidebar .nav-link.active {
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+    }
+
+    .main-content {
+      margin-left: 250px;
+      padding: 30px;
+    }
+
+    .stat-card {
+      border-radius: 10px;
+      padding: 25px;
+      color: white;
+      margin-bottom: 20px;
+      box-shadow: 0 3px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .stat-card.services {
+      background: linear-gradient(135deg, #e74c3c, #c0392b);
+    }
+
+    .stat-card.careers {
+      background: linear-gradient(135deg, #2ecc71, #27ae60);
+    }
+
+    .stat-card.applications {
+      background: linear-gradient(135deg, #f39c12, #d68910);
+    }
+
+    .stat-card .stat-value {
+      font-size: 36px;
+      font-weight: bold;
+    }
+
+    .stat-card .stat-label {
+      font-size: 14px;
+      opacity: 0.9;
+    }
+
+    .section {
+      display: none;
+    }
+
+    .section.active {
+      display: block;
+    }
+
+    @media (max-width: 768px) {
+      .sidebar {
+        width: 80px;
+        padding: 10px;
+      }
+
+      .sidebar .logo {
+        font-size: 20px;
+        text-align: center;
+      }
+
+      .sidebar .nav-link span {
+        display: none;
+      }
+
+      .main-content {
+        margin-left: 80px;
+        padding: 15px;
+      }
+    }
