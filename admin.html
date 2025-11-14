@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -57,7 +56,7 @@
     }
 
     .login-title {
-      font-size: 1.8rem;
+      font-size: 24px;
       font-weight: 700;
       color: #333;
       margin: 0;
@@ -351,39 +350,94 @@
     }
   </style>
 </head>
-
 <body>
 
   <!-- ===== LOGIN PAGE ===== -->
-  <div class="login-page" id="loginPage">
-    <div class="login-container">
-      <div class="login-header">
-        <div class="login-logo">
-          <i class="fas fa-layer-group"></i>
-        </div>
-        <h1 class="login-title">Admin Panel</h1>
-        <p class="login-subtitle">Services & Careers Management</p>
+ <div class="login-page" id="loginPage">
+  <div class="login-container">
+    <div class="login-header">
+      <div class="login-logo">
+        <i class="fas fa-layer-group"></i>
+      </div>
+      <h3 class="login-title">Admin Panel - ISYSDATA SYSTEMS</h3>
+      <p class="login-subtitle">Services & Careers Management</p>
+    </div>
+
+    <form id="loginForm" onsubmit="handleLogin(event)">
+      <div class="form-group">
+        <label for="loginEmail">Email Address</label>
+        <input type="email" id="loginEmail" placeholder="admin@example.com" required>
       </div>
 
-      <form id="loginForm" onsubmit="handleLogin(event)">
-        <div class="form-group">
-          <label for="loginEmail">Email Address</label>
-          <input type="email" id="loginEmail" placeholder="admin@example.com" required>
-        </div>
-
-        <div class="form-group">
-          <label for="loginPassword">Password</label>
+      <div class="form-group">
+        <label for="loginPassword">Password</label>
+        <div class="password-wrapper">
           <input type="password" id="loginPassword" placeholder="Enter your password" required>
+          <button type="button" class="show-password-btn" id="showPasswordBtn" onclick="toggleShowPassword()">
+            <i class="fas fa-eye"></i>
+          </button>
         </div>
+      </div>
 
-        <button type="submit" class="login-btn" id="loginBtn">
-          Sign In
-        </button>
+      <button type="submit" class="login-btn" id="loginBtn">
+        Sign In
+      </button>
 
-        <div class="error-message" id="errorMessage"></div>
-      </form>
-    </div>
+      <div class="error-message" id="errorMessage"></div>
+    </form>
   </div>
+</div>
+
+<style>
+  .password-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  .password-wrapper input {
+    width: 100%;
+    padding-right: 40px;
+  }
+
+  .show-password-btn {
+    position: absolute;
+    right: 12px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #666;
+    font-size: 16px;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s;
+  }
+
+  .show-password-btn:hover {
+    color: #333;
+  }
+
+  .show-password-btn:active {
+    transform: scale(0.95);
+  }
+</style>
+
+<script>
+  function toggleShowPassword() {
+    const passwordInput = document.getElementById('loginPassword');
+    const showPasswordBtn = document.getElementById('showPasswordBtn');
+    
+    if (passwordInput.type === 'password') {
+      passwordInput.type = 'text';
+      showPasswordBtn.innerHTML = '<i class="fas fa-eye-slash"></i>';
+    } else {
+      passwordInput.type = 'password';
+      showPasswordBtn.innerHTML = '<i class="fas fa-eye"></i>';
+    }
+  }
+</script>
 
   <!-- ===== DASHBOARD PAGE ===== -->
   <div class="dashboard-page" id="dashboardPage">
