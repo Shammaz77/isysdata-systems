@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Application Submitted - Thank You</title>
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
+
+		body {
+			font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+			background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+			min-height: 100vh;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			padding: 20px;
+		}
+
+		.container {
+			background: white;
+			border-radius: 10px;
+			box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+			text-align: center;
+			padding: 60px 20px;
+			max-width: 600px;
+			animation: slideUp 0.6s ease-out;
+		}
+
+		@keyframes slideUp {
+			from {
+				opacity: 0;
+				transform: translateY(30px);
+			}
+
+			to {
+				opacity: 1;
+				transform: translateY(0);
+			}
+		}
+
+		.checkmark {
+			width: 80px;
+			height: 80px;
+			background: #4CAF50;
+			border-radius: 50%;
+			margin: 0 auto 30px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			animation: scaleIn 0.5s ease-out;
+		}
+
+		@keyframes scaleIn {
+			from {
+				transform: scale(0);
+			}
+
+			to {
+				transform: scale(1);
+			}
+		}
+
+		.checkmark svg {
+			width: 50px;
+			height: 50px;
+			stroke: white;
+			stroke-width: 3;
+			fill: none;
+			stroke-linecap: round;
+			stroke-linejoin: round;
+		}
+
+		h1 {
+			color: #333;
+			font-size: 2.5em;
+			margin-bottom: 15px;
+			font-weight: 600;
+		}
+
+		.subtitle {
+			color: #666;
+			font-size: 1.1em;
+			margin-bottom: 30px;
+			line-height: 1.6;
+		}
+
+		.details {
+			background: #f5f5f5;
+			padding: 25px;
+			border-radius: 8px;
+			margin-bottom: 30px;
+			text-align: left;
+		}
+
+		.detail-item {
+			margin-bottom: 15px;
+			font-size: 0.95em;
+		}
+
+		.detail-item:last-child {
+			margin-bottom: 0;
+		}
+
+		.detail-label {
+			color: #667eea;
+			font-weight: 600;
+			margin-right: 8px;
+		}
+
+		.detail-value {
+			color: #333;
+		}
+
+		.message {
+			color: #666;
+			font-size: 0.95em;
+			margin-bottom: 30px;
+			line-height: 1.6;
+		}
+
+		.button-group {
+			display: flex;
+			gap: 15px;
+			justify-content: center;
+			flex-wrap: wrap;
+		}
+
+		.btn {
+			padding: 12px 30px;
+			font-size: 1em;
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+			transition: all 0.3s ease;
+			font-weight: 600;
+			text-decoration: none;
+			display: inline-block;
+		}
+
+		.btn-primary {
+			background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+			color: white;
+		}
+
+		.btn-primary:hover {
+			transform: translateY(-2px);
+			box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+		}
+
+		.btn-secondary {
+			background: #f0f0f0;
+			color: #333;
+			border: 2px solid #ddd;
+		}
+
+		.btn-secondary:hover {
+			background: #e8e8e8;
+			border-color: #667eea;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="container">
+		<div class="checkmark">
+			<svg viewBox="0 0 52 52">
+				<circle cx="26" cy="26" r="25" fill="none" stroke="white" stroke-width="2" />
+				<path fill="none" stroke="white" stroke-width="3" d="M 14.1 27.2l7.1 7.2 16.7-16.8" stroke-linecap="round"
+					stroke-linejoin="round" />
+			</svg>
+		</div>
+
+		<h1>Thank You!</h1>
+		<p class="subtitle">Your application has been successfully submitted</p>
+
+		<div class="details">
+			<div class="detail-item">
+				<span class="detail-label">Status:</span>
+				<span class="detail-value">Application Received</span>
+			</div>
+			<div class="detail-item">
+				<span class="detail-label">Submitted on:</span>
+				<span class="detail-value" id="submitDate"></span>
+			</div>
+			<div class="detail-item">
+				<span class="detail-label">Next Steps:</span>
+				<span class="detail-value">Our HR team will review your application and contact you within 5-7 business
+					days</span>
+			</div>
+		</div>
+
+		<p class="message">
+			We appreciate your interest in joining our team! Your application has been received and will be carefully reviewed
+			by our recruitment team. Please check your email for confirmation and updates about your application status.
+		</p>
+
+		<div class="button-group">
+			<button class="btn btn-primary" onclick="goHome()">Back to Home</button>
+		</div>
+	</div>
+
+	<script>
+		// Set current date
+		document.getElementById('submitDate').textContent = new Date().toLocaleDateString('en-US', {
+			year: 'numeric',
+			month: 'long',
+			day: 'numeric',
+			hour: '2-digit',
+			minute: '2-digit'
+		});
+
+		// Generate application ID
+		document.getElementById('appId').textContent = 'APP-' + Date.now();
+
+		function goHome() {
+			window.location.href = '/';
+		}
+
+		function viewJobs() {
+			window.location.href = '/careers';
+		}
+	</script>
+</body>
+
+</html>
