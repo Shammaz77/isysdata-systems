@@ -1309,7 +1309,8 @@ body::-webkit-scrollbar-thumb {
     font-size: 14px;
   }
   .mean-container .mean-nav > ul {
-    height: 47vh;
+    height: max-content;
+    padding-bottom: 25px;
     overflow-y: auto;
   }
   /* Menu button */
